@@ -14,10 +14,10 @@ fn check_trace_program(
   trace_length:    Field,
   trace_pcs:       [Field; MAX_TRACE_LENGTH],
   trace_ops:       [u8;    MAX_TRACE_LENGTH],
-  trace_op_data:   [Field; MAX_TRACE_LENGTH],
+  trace_op_data:   [u64; MAX_TRACE_LENGTH],
   program_length:  Field,
   program_ops:     [u8;    MAX_PROGRAM_LENGTH],
-  program_op_data: [Field; MAX_PROGRAM_LENGTH]
+  program_op_data: [u64; MAX_PROGRAM_LENGTH]
 ) {
   let plen: u16 = program_length as u16;
   let tlen: u16 = trace_length as u16;
@@ -39,19 +39,19 @@ fn check_trace_program(
 }
 
 fn check_execution(
-  reg1_in:       Field,
-  reg2_in:       Field,
-  reg3_in:       Field,
-  reg4_in:       Field,
+  reg1_in:       u64,
+  reg2_in:       u64,
+  reg3_in:       u64,
+  reg4_in:       u64,
 
   trace_length:  Field,
   // trace_pcs:    [Field; MAX_TRACE_LENGTH],
   trace_ops:     [u8;    MAX_TRACE_LENGTH],
-  trace_op_data: [Field; MAX_TRACE_LENGTH],
-  trace_reg1:    [Field; MAX_TRACE_LENGTH],
-  trace_reg2:    [Field; MAX_TRACE_LENGTH],
-  trace_reg3:    [Field; MAX_TRACE_LENGTH],
-  trace_reg4:    [Field; MAX_TRACE_LENGTH]
+  trace_op_data: [u64; MAX_TRACE_LENGTH],
+  trace_reg1:    [u64; MAX_TRACE_LENGTH],
+  trace_reg2:    [u64; MAX_TRACE_LENGTH],
+  trace_reg3:    [u64; MAX_TRACE_LENGTH],
+  trace_reg4:    [u64; MAX_TRACE_LENGTH]
 ) {
   let tlen: u16 = trace_length as u16;
 
@@ -76,14 +76,14 @@ fn check_execution(
 
 fn check_register_end_states(
   trace_length: Field,
-  trace_reg1:   [Field; MAX_TRACE_LENGTH],
-  trace_reg2:   [Field; MAX_TRACE_LENGTH],
-  trace_reg3:   [Field; MAX_TRACE_LENGTH],
-  trace_reg4:   [Field; MAX_TRACE_LENGTH],
-  reg1_out:     Field,
-  reg2_out:     Field,
-  reg3_out:     Field,
-  reg4_out:     Field
+  trace_reg1:   [u64; MAX_TRACE_LENGTH],
+  trace_reg2:   [u64; MAX_TRACE_LENGTH],
+  trace_reg3:   [u64; MAX_TRACE_LENGTH],
+  trace_reg4:   [u64; MAX_TRACE_LENGTH],
+  reg1_out:     u64,
+  reg2_out:     u64,
+  reg3_out:     u64,
+  reg4_out:     u64
 ) {
   for i in 0..MAX_TRACE_LENGTH {
     constrain (i != trace_length - 1) | (
@@ -97,31 +97,31 @@ fn check_register_end_states(
 
 fn main(
   // Public input to the program
-  reg1_in:         pub Field,
-  reg2_in:         pub Field,
-  reg3_in:         pub Field,
-  reg4_in:         pub Field,
+  reg1_in:         pub u64,
+  reg2_in:         pub u64,
+  reg3_in:         pub u64,
+  reg4_in:         pub u64,
 
   // The execution trace.
   trace_length:        Field,
   trace_pcs:           [Field; MAX_TRACE_LENGTH],
   trace_ops:           [u8;    MAX_TRACE_LENGTH],
-  trace_op_data:       [Field; MAX_TRACE_LENGTH],
-  trace_reg1:          [Field; MAX_TRACE_LENGTH],
-  trace_reg2:          [Field; MAX_TRACE_LENGTH],
-  trace_reg3:          [Field; MAX_TRACE_LENGTH],
-  trace_reg4:          [Field; MAX_TRACE_LENGTH],
+  trace_op_data:       [u64; MAX_TRACE_LENGTH],
+  trace_reg1:          [u64; MAX_TRACE_LENGTH],
+  trace_reg2:          [u64; MAX_TRACE_LENGTH],
+  trace_reg3:          [u64; MAX_TRACE_LENGTH],
+  trace_reg4:          [u64; MAX_TRACE_LENGTH],
 
   // The public program.
   program_length:  pub Field,
   program_ops:     pub [u8;    MAX_PROGRAM_LENGTH],
-  program_op_data: pub [Field; MAX_PROGRAM_LENGTH],
+  program_op_data: pub [u64; MAX_PROGRAM_LENGTH],
 
   // The program's output
-  reg1_out:        pub Field,
-  reg2_out:        pub Field,
-  reg3_out:        pub Field,
-  reg4_out:        pub Field
+  reg1_out:        pub u64,
+  reg2_out:        pub u64,
+  reg3_out:        pub u64,
+  reg4_out:        pub u64
 ) {
   constrain trace_length as u16 >= 1;
 

@@ -2,10 +2,11 @@ mod utils;
 
 fn check_step(
   op: u8,
-  op_data: Field,
-  reg1:      Field, reg2:      Field, reg3:      Field, reg4:      Field,
-  reg1_next: Field, reg2_next: Field, reg3_next: Field, reg4_next: Field
+  op_data: u64,
+  reg1:      u64, reg2:      u64, reg3:      u64, reg4:      u64,
+  reg1_next: u64, reg2_next: u64, reg3_next: u64, reg4_next: u64
 ) {
+  constrain op_data == op_data;
   if (op & 0x80) == 0 {
     // Arithmetic Operations
     if (op & 0x20) == 0 {
@@ -57,10 +58,10 @@ fn check_step(
 
 fn check_op_add(
   op: u8,
-  reg1:      Field, reg2:      Field, reg3:      Field, reg4:      Field,
-  reg1_next: Field, reg2_next: Field, reg3_next: Field, reg4_next: Field
+  reg1:      u64, reg2:      u64, reg3:      u64, reg4:      u64,
+  reg1_next: u64, reg2_next: u64, reg3_next: u64, reg4_next: u64
 ) {
-  let (regA, regB): (Field, Field) = utils::get_regs(op, reg1, reg2, reg3, reg4);
+  let (regA, regB): (u64, u64) = utils::get_regs(op, reg1, reg2, reg3, reg4);
   constrain reg1_next == regA + regB;
   constrain reg2_next == reg2;
   constrain reg3_next == reg3;
@@ -69,10 +70,10 @@ fn check_op_add(
 
 fn check_op_sub(
   op: u8,
-  reg1:      Field, reg2:      Field, reg3:      Field, reg4:      Field,
-  reg1_next: Field, reg2_next: Field, reg3_next: Field, reg4_next: Field
+  reg1:      u64, reg2:      u64, reg3:      u64, reg4:      u64,
+  reg1_next: u64, reg2_next: u64, reg3_next: u64, reg4_next: u64
 ) {
-  let (regA, regB): (Field, Field) = utils::get_regs(op, reg1, reg2, reg3, reg4);
+  let (regA, regB): (u64, u64) = utils::get_regs(op, reg1, reg2, reg3, reg4);
   constrain reg1_next == regA - regB;
   constrain reg2_next == reg2;
   constrain reg3_next == reg3;
@@ -81,10 +82,10 @@ fn check_op_sub(
 
 fn check_op_mul(
   op: u8,
-  reg1:      Field, reg2:      Field, reg3:      Field, reg4:      Field,
-  reg1_next: Field, reg2_next: Field, reg3_next: Field, reg4_next: Field
+  reg1:      u64, reg2:      u64, reg3:      u64, reg4:      u64,
+  reg1_next: u64, reg2_next: u64, reg3_next: u64, reg4_next: u64
 ) {
-  let (regA, regB): (Field, Field) = utils::get_regs(op, reg1, reg2, reg3, reg4);
+  let (regA, regB): (u64, u64) = utils::get_regs(op, reg1, reg2, reg3, reg4);
   constrain reg1_next == regA * regB;
   constrain reg2_next == reg2;
   constrain reg3_next == reg3;
@@ -93,10 +94,10 @@ fn check_op_mul(
 
 fn check_op_div(
   op: u8,
-  reg1:      Field, reg2:      Field, reg3:      Field, reg4:      Field,
-  reg1_next: Field, reg2_next: Field, reg3_next: Field, reg4_next: Field
+  reg1:      u64, reg2:      u64, reg3:      u64, reg4:      u64,
+  reg1_next: u64, reg2_next: u64, reg3_next: u64, reg4_next: u64
 ) {
-  let (regA, regB): (Field, Field) = utils::get_regs(op, reg1, reg2, reg3, reg4);
+  let (regA, regB): (u64, u64) = utils::get_regs(op, reg1, reg2, reg3, reg4);
   constrain reg1_next == regA / regB;
   constrain reg2_next == reg2;
   constrain reg3_next == reg3;
@@ -105,8 +106,8 @@ fn check_op_div(
 
 fn check_op_swap(
   op: u8,
-  reg1:      Field, reg2:      Field, reg3:      Field, reg4:      Field,
-  reg1_next: Field, reg2_next: Field, reg3_next: Field, reg4_next: Field
+  reg1:      u64, reg2:      u64, reg3:      u64, reg4:      u64,
+  reg1_next: u64, reg2_next: u64, reg3_next: u64, reg4_next: u64
 ) {
   if (op & 0x08) == 0 {
     if (op & 0x04) == 0 {
@@ -210,6 +211,8 @@ fn check_op_swap(
     }
   }
 }
+
+// fn check_op
 
 // fn check_op_copy(
 //   op: u8,

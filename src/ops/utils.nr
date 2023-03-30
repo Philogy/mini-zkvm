@@ -1,12 +1,12 @@
 fn get_regs(
   op: u8,
-  reg1: Field,
-  reg2: Field,
-  reg3: Field,
-  reg4: Field
-) -> (Field, Field) {
-  let mut regA: Field = 0;
-  let mut regB: Field = 0;
+  reg1: u64,
+  reg2: u64,
+  reg3: u64,
+  reg4: u64
+) -> (u64, u64) {
+  let mut regA: u64 = 0;
+  let mut regB: u64 = 0;
 
   if (op & 0x02) == 0 {
     if (op & 0x01) == 0 {
@@ -36,7 +36,7 @@ fn get_regs(
     }
   }
 
-  let retTup: (Field, Field) = (regA, regB);
+  let retTup: (u64, u64) = (regA, regB);
 
   retTup
 }
